@@ -1,25 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Entry</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Add Devices</h2>
-    <div id="deviceForm">
-        <input type="text" id="deviceName" placeholder="Device Name">
-        <input type="text" id="macAddress" placeholder="MAC Address">
-        <br><br>
-        <button class="btn" onclick="addDevice()">Add This Device</button>
-        <button class="btn" onclick="addAnotherDevice()">Add Another Device</button>
+  <div class="container">
+    <div class="adding-devices">
+      <h2>Adding Devices:</h2>
+      <div id="dynamicForm">
+        <div class="device">
+          <label><b>Device:</b> <input type="text" name="device1" class="deviceInput"></label>
+        </div>
+        <div class="device">
+          <label><b>MAC Address:</b> <input type="text" name="mac1" class="macInput"></label>
+        </div>
+        <div class="device">
+          <label><b>Primary Band (2.4GHz/5.0GHz):</b> <input type="text" name="primaryBand1" class="primaryBandInput"></label>
+        </div>
+      </div>
+      <button onclick="addDevice()">Add This Device</button>
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Device</th>
+            <th>MAC Address</th>
+            <th>Primary Band</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+      <button onclick="copyToTable()">Copy Table</button>
     </div>
-    <br><br>
-    <h3>Added Devices</h3>
-    <div id="deviceTable"></div>
-    <br>
-    <button class="btn" onclick="copyTable()">Copy Table</button>
-    <script src="script.js"></script>
+
+    <div class="aircheck-metrics">
+      <h2>AirCheck Metrics:</h2>
+      <div id="part2Form">
+        <div class="aircheck">
+          <h3>NAU 2.4GHz</h3>
+          <label><b>AP Name:</b> <input type="text" name="apName24" id="apName24"></label>
+          <label><b>MAC address:</b> <input type="text" name="macAddress24" id="macAddress24"></label>
+          <label><b>Strongest 2.4GHz (g/n) AP dBm:</b> <input type="text" name="strongest24" id="strongest24"></label>
+          <label><b>SNR:</b> <input type="text" name="snr24" id="snr24"></label>
+        </div>
+
+        <div class="aircheck">
+          <h3>NAU 5.0GHz</h3>
+          <label><b>AP Name:</b> <input type="text" name="apName5" id="apName5"></label>
+          <label><b>MAC address:</b> <input type="text" name="macAddress5" id="macAddress5"></label>
+          <label><b>Strongest 5GHz (a/n) AP dBm:</b> <input type="text" name="strongest5" id="strongest5"></label>
+          <label><b>SNR:</b> <input type="text" name="snr5" id="snr5"></label>
+        </div>
+
+        <div class="aircheck">
+          <h3>NAU5G</h3>
+          <label><b>AP Name:</b> <input type="text" name="apName5G" id="apName5G"></label>
+          <label><b>MAC address:</b> <input type="text" name="macAddress5G" id="macAddress5G"></label>
+          <label><b>Strongest 5GHz (a/n) AP dBm:</b> <input type="text" name="strongest5G" id="strongest5G"></label>
+          <label><b>SNR:</b> <input type="text" name="snr5G" id="snr5G"></label>
+        </div>
+
+        <div class="aircheck">
+          <h3>NAU Guest 2.4GHz</h3>
+          <label><b>AP Name:</b> <input type="text" name="apNameGuest24" id="apNameGuest24"></label>
+          <label><b>MAC address:</b> <input type="text" name="macAddressGuest24" id="macAddressGuest24"></label>
+          <label><b>Strongest 2.4GHz (g/n) AP dBm:</b> <input type="text" name="strongestGuest24" id="strongestGuest24"></label>
+          <label><b>SNR:</b> <input type="text" name="snrGuest24" id="snrGuest24"></label>
+        </div>
+
+        <div class="aircheck">
+          <h3>NAU Guest 5.0GHz</h3>
+          <label><b>AP Name:</b> <input type="text" name="apNameGuest5" id="apNameGuest5"></label>
+          <label><b>MAC address:</b> <input type="text" name="macAddressGuest5" id="macAddressGuest5"></label>
+          <label><b>Strongest 5GHz (a/n) AP dBm:</b> <input type="text" name="strongestGuest5" id="strongestGuest5"></label>
+          <label><b>SNR:</b> <input type="text" name="snrGuest5" id="snrGuest5"></label>
+        </div>
+      </div>
+      <button onclick="copyPart2Data()">Copy Part 2 Data</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
