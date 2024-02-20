@@ -4,19 +4,17 @@ function addDevice() {
   var primaryBandInput = document.querySelectorAll('.primaryBandInput');
 
   // Check if any input field is empty
-  if (deviceInput.length === 0 || macInput.length === 0 || primaryBandInput.length === 0) {
-    alert('All fields are mandatory');
-    return;
+  for (var i = 0; i < deviceInput.length; i++) {
+    if (!deviceInput[i].value || !macInput[i].value || !primaryBandInput[i].value) {
+      alert('Please fill in all fields for Device ' + (i + 1));
+      return; // Exit function if any field is empty
+    }
   }
 
   var tableBody = document.getElementById('tableBody');
   var newRow = tableBody.insertRow();
 
   for (var i = 0; i < deviceInput.length; i++) {
-    if (!deviceInput[i].value || !macInput[i].value || !primaryBandInput[i].value) {
-      alert('All fields are mandatory');
-      return;
-    }
     var cell = newRow.insertCell(i);
     cell.innerHTML = deviceInput[i].value;
   }
@@ -37,6 +35,13 @@ function addDevice() {
 function copyToTable() {
   var table = document.getElementById('dataTable');
   var rows = table.querySelectorAll('tr');
+
+  // Check if the table is empty
+  if (rows.length <= 1) {
+    alert('Table data is empty');
+    return; // Exit function if table is empty
+  }
+
   var data = '';
 
   // Add header for device information
@@ -69,14 +74,31 @@ function copyToTable() {
 
   // Copy the formatted data to the clipboard
   navigator.clipboard.writeText(data)
-    .then(() => alert('Table data copied to clipboard'))
-    .catch(err => console.error('Unable to copy table data to clipboard', err));
+    .then(() => alert('Device Information data copied to clipboard'))
+    .catch(err => console.error('Unable to copy Device Information to clipboard', err));
 }
-
 
 function copyPart2Data() {
   const part2Form = document.getElementById('part2Form');
   const aircheckSections = part2Form.querySelectorAll('.aircheck');
+
+  let missingFields = [];
+
+  aircheckSections.forEach(section => {
+    const inputs = section.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (!input.value) {
+        const label = input.parentElement.querySelector('b').textContent.trim();
+        missingFields.push(label);
+      }
+    });
+  });
+
+  if (missingFields.length > 0) {
+    alert('Please fill in the following fields for Aircheck Metrics:\n\n' + missingFields.join('\n'));
+    return;
+  }
+
   let data = '';
 
   // Add header for air-check metrics
@@ -101,75 +123,84 @@ function copyPart2Data() {
   });
 
   navigator.clipboard.writeText(data)
-    .then(() => alert('Part 2 data copied to clipboard'))
-    .catch(err => console.error('Unable to copy Part 2 data to clipboard', err));
+    .then(() => alert('AirCheck Metrics data copied to clipboard'))
+    .catch(err => console.error('Unable to copy AirCheck Metrics data to clipboard', err));
 }
 
 function copyBothData() {
-  // Part 1 Data
+  // Validate part 1 data
+  var deviceInput = document.querySelectorAll('.deviceInput');
+  var macInput = document.querySelectorAll('.macInput');
+  var primaryBandInput = document.querySelectorAll('.primaryBandInput');
+
+  for (var i = 0; i < deviceInput.length; i++) {
+    if (!deviceInput[i].value || !macInput[i].value || !primaryBandInput[i].value) {
+      alert('Please fill in all fields for Device ' + (i + 1));
+      return; // Exit function if any field is empty
+    }
+  }
+
+  // Validate table data
   var table = document.getElementById('dataTable');
   var rows = table.querySelectorAll('tr');
-  var part1Data = '';
+  if (rows.length <= 1) {
+    alert('Devices Table is empty');
+    return; // Exit function if table is empty
+  }
 
-  // Add heading for Part 1 data
+  // Validate part 2 data
+  const part2Form = document.getElementById('part2Form');
+  const aircheckSections = part2Form.querySelectorAll('.aircheck');
+  aircheckSections.forEach(section => {
+    const inputs = section.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (!input.value) {
+        const label = input.parentElement.querySelector('b').textContent.trim();
+        alert('Please fill in ' + label);
+        return; // Exit function if any field is empty
+      }
+    });
+  });
+
+  // Part 1 Data
+  var part1Data = '';
   part1Data += '-----------------------------------\n';
   part1Data += 'DEVICES INFORMATION:\n';
   part1Data += '-----------------------------------\n';
 
-  // Iterate over each row in the table
   rows.forEach((row, rowIndex) => {
-    // If it's not the header row
     if (rowIndex > 0) {
-      // Get the cells of the current row
       var cells = row.querySelectorAll('td');
-      
-      // Add a new line for each device entry
       part1Data += 'Device ' + (rowIndex) + ':\n';
-
-      // Iterate over the cells of the current row
       cells.forEach((cell, cellIndex) => {
-        // Get the corresponding label from the table header
         var label = table.querySelector('th:nth-child(' + (cellIndex + 1) + ')').textContent.trim();
-        // Append the label and cell's content to the data string
         part1Data += label + (rowIndex) + ': ' + cell.innerHTML.trim() + '\n';
       });
-
-      // Add an extra line break after each row
       part1Data += '\n';
     }
   });
 
   // Part 2 Data
-  const part2Form = document.getElementById('part2Form');
-  const aircheckSections = part2Form.querySelectorAll('.aircheck');
-  let part2Data = '';
-
-  // Add heading for Part 2 data
+  var part2Data = '';
   part2Data += '-----------------------------------\n';
   part2Data += 'AIR-CHECK METRICS:\n';
   part2Data += '-----------------------------------\n';
 
   aircheckSections.forEach(section => {
-    // Get the heading of the subsection
     const heading = section.querySelector('h3').textContent.trim();
     part2Data += `${heading}\n`;
 
-    // Get input fields within the subsection
     const inputs = section.querySelectorAll('input');
     inputs.forEach(input => {
       const label = input.parentElement.querySelector('b').textContent.trim();
       part2Data += `${label}: ${input.value}\n`;
     });
-
-    // Add a separator between sections
     part2Data += '\n';
   });
 
-  // Combine Part 1 and Part 2 data
   var combinedData = part1Data + '\n' + part2Data;
 
-  // Copy the combined data to the clipboard
   navigator.clipboard.writeText(combinedData)
-    .then(() => alert('Part 1 and Part 2 data combined copied to clipboard'))
-    .catch(err => console.error('Unable to copy Part 1 and Part 2 data combined to clipboard', err));
+    .then(() => alert('Devices and AirCheck Metrics Info has been copied to the clipboard'))
+    .catch(err => console.error('Unable to copy Devices and AirCheck Metrics Info combined to clipboard', err));
 }
