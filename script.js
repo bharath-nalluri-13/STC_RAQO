@@ -209,3 +209,89 @@ function copyBothData() {
     .catch(err => console.error('Unable to copy Devices and AirCheck Metrics Info combined to clipboard', err));
 }
 
+function validatePart3() {
+  const webConnectionSpeed = document.getElementById('webConnectionSpeed').value.trim();
+  const downloadTime = document.getElementById('downloadTime').value.trim();
+  const internalSpeedTest = document.getElementById('internalSpeedTest').value.trim();
+  const stayConnected = document.querySelector('input[name="stayConnected"]:checked');
+  const disconnectTime = document.getElementById('disconnectTime').value.trim();
+
+  const missingFields = [];
+
+  if (!webConnectionSpeed) {
+    missingFields.push('Check web connection speed');
+  }
+  if (!downloadTime) {
+    missingFields.push('Time to download file');
+  }
+  if (!internalSpeedTest) {
+    missingFields.push('Internal Speed Test');
+  }
+  if (!stayConnected) {
+    missingFields.push('Does the Dell Latitude stay connected to the AP?');
+  } else if (stayConnected.value === 'No' && !disconnectTime) {
+    missingFields.push('If not, how long does it stay connected?');
+  }
+
+  if (missingFields.length > 0) {
+    alert('Please fill in the following fields for Dell Latitude Metrics:\n\n' + missingFields.join('\n'));
+    return false; // Prevent form submission
+  }
+
+  return true; // Proceed with form submission
+}
+
+
+
+function copyDellMetricsData() {
+  const webConnectionSpeed = document.getElementById('webConnectionSpeed').value.trim();
+  const downloadTime = document.getElementById('downloadTime').value.trim();
+  const internalSpeedTest = document.getElementById('internalSpeedTest').value.trim();
+  const stayConnected = document.querySelector('input[name="stayConnected"]:checked');
+  const disconnectTime = stayConnected && stayConnected.value === 'No' ? document.getElementById('disconnectTime').value.trim() : 'N/A';
+
+  if (!webConnectionSpeed || !downloadTime || !internalSpeedTest || !stayConnected) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const stayConnectedValue = stayConnected.value;
+
+  const data = `
+  -----------------------------------
+  Dell Latitude Metrics:
+  -----------------------------------
+  Check web connection speed (https://drive.google.com/drive/folders/14y3VaiITf_gjgzD16fJSlJOUobo88rWl 10MB file): ${webConnectionSpeed}
+  Time to download file: ${downloadTime}
+  Internal Speed Test (https://baldr.ucc.nau.edu/stc/speed/): ${internalSpeedTest}
+  Does the Dell Latitude stay connected to the AP? : ${stayConnectedValue}
+  If not, how long does it stay connected? : ${disconnectTime}
+  
+  In addition, Student Tech should ensure that the troubleshooting steps listed for the phones tech have been completed.
+  An Ethernet cable is also brought to the user so they can stay connected while we continue the troubleshooting process. If the user just wants to use Ethernet instead and stop troubleshooting, ticket closed.
+  If troubleshooting by Student tech fixes connectivity problems, ticket closed. This should be added as a "Work Note" in the open ServiceNow ticket.
+  `;
+
+  navigator.clipboard.writeText(data)
+    .then(() => alert('Dell Metrics Data copied to clipboard'))
+    .catch(err => console.error('Unable to copy Dell Metrics Data to clipboard', err));
+}
+
+function copyAllInfo() {
+  // Copy Part 1 data
+  var part1Data = copyToTable();
+
+  // Copy Part 2 data
+  var part2Data = copyPart2Data();
+
+  // Copy Part 3 data
+  var part3Data = copyDellMetricsData();
+
+  // Combine all parts into one string
+  var allData = part1Data + '\n\n' + part2Data + '\n\n' + part3Data;
+
+  // Copy the combined data to the clipboard
+  navigator.clipboard.writeText(allData)
+    .then(() => alert('All information copied to clipboard'))
+    .catch(err => console.error('Unable to copy all information to clipboard', err));
+}
