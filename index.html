@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <div class="adding-devices">
-      <h2>Adding Devices:</h2>
+      <h2><u><i>Adding Devices</u></i></h2>
       <div id="dynamicForm">
         <div class="device">
           <label><b>Device:</b> <input type="text" name="device1" class="deviceInput"></label>
@@ -22,6 +22,7 @@
         </div>
       </div>
       <button onclick="addDevice()">Add This Device</button>
+      <h3><u><i>Added Devices Table</u></i></h3>
       <table id="dataTable">
         <thead>
           <tr>
@@ -33,11 +34,11 @@
         <tbody id="tableBody">
         </tbody>
       </table>
-      <button onclick="copyToTable()">Copy Table</button>
+      <button onclick="copyToTable()">Copy Devices Table Info Alone</button>
     </div>
 
     <div class="aircheck-metrics">
-      <h2>AirCheck Metrics:</h2>
+      <h2><u><i>AirCheck Metrics</u></i></h2>
       <div id="part2Form">
         <div class="aircheck">
           <h3>NAU 2.4GHz</h3>
@@ -79,8 +80,8 @@
           <label><b>SNR:</b> <input type="text" name="snrGuest5" id="snrGuest5"></label>
         </div>
       </div>
-      <button onclick="copyPart2Data()">Copy Part 2 Data</button>
-      <button onclick="copyBothData()">Copy Part 2 and Part 1 Data Combined</button>
+      <button onclick="copyPart2Data()">Copy AirCheck Metrics Data Alone</button>
+      <button onclick="copyBothData()">Copy Both Devices and AirCheck Metrics Combined</button>
     </div>
   </div>
 
