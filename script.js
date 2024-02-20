@@ -132,37 +132,42 @@ function copyBothData() {
   var deviceInput = document.querySelectorAll('.deviceInput');
   var macInput = document.querySelectorAll('.macInput');
   var primaryBandInput = document.querySelectorAll('.primaryBandInput');
+  var missingPart1Fields = [];
 
   for (var i = 0; i < deviceInput.length; i++) {
     if (!deviceInput[i].value || !macInput[i].value || !primaryBandInput[i].value) {
-      alert('Please fill in all fields for Device ' + (i + 1));
-      return; // Exit function if any field is empty
+      missingPart1Fields.push('Device ' + (i + 1));
     }
   }
 
   // Validate table data
   var table = document.getElementById('dataTable');
   var rows = table.querySelectorAll('tr');
-  if (rows.length <= 1) {
-    alert('Devices Table is empty');
-    return; // Exit function if table is empty
-  }
+  var missingTableData = rows.length <= 1 ? ['Devices Table'] : [];
 
   // Validate part 2 data
   const part2Form = document.getElementById('part2Form');
   const aircheckSections = part2Form.querySelectorAll('.aircheck');
+  var missingPart2Fields = [];
+
   aircheckSections.forEach(section => {
     const inputs = section.querySelectorAll('input');
     inputs.forEach(input => {
       if (!input.value) {
         const label = input.parentElement.querySelector('b').textContent.trim();
-        alert('Please fill in ' + label);
-        return; // Exit function if any field is empty
+        missingPart2Fields.push(label);
       }
     });
   });
 
-  // Part 1 Data
+  var missingItems = missingPart1Fields.concat(missingTableData, missingPart2Fields);
+
+  if (missingItems.length > 0) {
+    alert('Please fill in the following fields:\n\n' + missingItems.join('\n'));
+    return;
+  }
+
+  // If all data is filled, proceed with copying both parts
   var part1Data = '';
   part1Data += '-----------------------------------\n';
   part1Data += 'DEVICES INFORMATION:\n';
@@ -180,7 +185,6 @@ function copyBothData() {
     }
   });
 
-  // Part 2 Data
   var part2Data = '';
   part2Data += '-----------------------------------\n';
   part2Data += 'AIR-CHECK METRICS:\n';
@@ -204,3 +208,4 @@ function copyBothData() {
     .then(() => alert('Devices and AirCheck Metrics Info has been copied to the clipboard'))
     .catch(err => console.error('Unable to copy Devices and AirCheck Metrics Info combined to clipboard', err));
 }
+
