@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Form</title>
+  <title>Wireless Metrics</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -83,6 +83,42 @@
       <button onclick="copyPart2Data()">Copy AirCheck Metrics Data Alone</button>
       <button onclick="copyBothData()">Copy Both Devices and AirCheck Metrics Combined</button>
     </div>
+
+    <div class="dell-latitude-metrics">
+      <h2>Dell Latitude Metrics:</h2>
+      <div>
+        <label><b>Check web connection speed (<a href="https://drive.google.com/drive/folders/14y3VaiITf_gjgzD16fJSlJOUobo88rWl" target="_blank">10MB file</a>):</b> <input type="text" name="webConnectionSpeed" id="webConnectionSpeed" required></label>
+      </div>
+      <div>
+        <label><b>Time to download file:</b> <input type="text" name="downloadTime" id="downloadTime" required></label>
+      </div>
+      <div>
+        <label><b>Internal Speed Test (<a href="https://baldr.ucc.nau.edu/stc/speed/" target="_blank">Download/Upload Speed</a>):</b> <input type="text" name="internalSpeedTest" id="internalSpeedTest" required></label>
+      </div>
+      <div class="stay-connected">
+        <label><b>Does the Dell Latitude stay connected to the AP?</b></label>
+        <div class="stay-connected-options">
+          <input type="radio" name="stayConnected" id="stayConnectedYes" value="Yes" required>
+          <label for="stayConnectedYes">Yes</label>
+          <input type="radio" name="stayConnected" id="stayConnectedNo" value="No" required>
+          <label for="stayConnectedNo">No</label>
+        </div>
+      </div>
+      
+      <div>
+        <label><b>If not, how long does it stay connected?</b> <input type="text" name="disconnectTime" id="disconnectTime"></label>
+      </div>
+      <p>
+        In addition, Student Tech should ensure that the troubleshooting steps listed for the phones tech have been completed. </br>
+        An Ethernet cable is also brought to the user so they can stay connected while we continue the troubleshooting process. If the user just wants to use Ethernet instead and stop troubleshooting, ticket closed. </br>
+        If troubleshooting by Student tech fixes connectivity problems, ticket closed. <br>
+        This should be added as a "Work Note" in the open ServiceNow ticket.
+      </p>
+      <button onclick="copyDellMetricsData()">Copy Dell Metrics Data</button>
+    </div>
+    
+    <button onclick="copyAllInfo()">COPY THE ENTIRE METRICS</button>
+
   </div>
 
   <script src="script.js"></script>
