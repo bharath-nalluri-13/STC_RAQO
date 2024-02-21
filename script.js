@@ -39,7 +39,7 @@ function copyToTable() {
   // Check if the table is empty
   if (rows.length <= 1) {
     alert('Table data is empty');
-    return; // Exit function if table is empty
+    return ''; // Return an empty string if table is empty
   }
 
   var data = '';
@@ -72,11 +72,9 @@ function copyToTable() {
     }
   });
 
-  // Copy the formatted data to the clipboard
-  navigator.clipboard.writeText(data)
-    .then(() => alert('Device Information data copied to clipboard'))
-    .catch(err => console.error('Unable to copy Device Information to clipboard', err));
+  return data; // Return the formatted data
 }
+
 
 function copyPart2Data() {
   const part2Form = document.getElementById('part2Form');
@@ -96,7 +94,7 @@ function copyPart2Data() {
 
   if (missingFields.length > 0) {
     alert('Please fill in the following fields for Aircheck Metrics:\n\n' + missingFields.join('\n'));
-    return;
+    return ''; // Return an empty string if fields are missing
   }
 
   let data = '';
@@ -122,9 +120,7 @@ function copyPart2Data() {
     data += '\n';
   });
 
-  navigator.clipboard.writeText(data)
-    .then(() => alert('AirCheck Metrics data copied to clipboard'))
-    .catch(err => console.error('Unable to copy AirCheck Metrics data to clipboard', err));
+  return data; // Return the formatted data
 }
 
 function copyBothData() {
@@ -241,8 +237,6 @@ function validatePart3() {
   return true; // Proceed with form submission
 }
 
-
-
 function copyDellMetricsData() {
   const webConnectionSpeed = document.getElementById('webConnectionSpeed').value.trim();
   const downloadTime = document.getElementById('downloadTime').value.trim();
@@ -250,9 +244,10 @@ function copyDellMetricsData() {
   const stayConnected = document.querySelector('input[name="stayConnected"]:checked');
   const disconnectTime = stayConnected && stayConnected.value === 'No' ? document.getElementById('disconnectTime').value.trim() : 'N/A';
 
+  // Check if any required field is missing
   if (!webConnectionSpeed || !downloadTime || !internalSpeedTest || !stayConnected) {
     alert('Please fill in all required fields.');
-    return;
+    return ''; // Return an empty string if any required field is missing
   }
 
   const stayConnectedValue = stayConnected.value;
@@ -265,33 +260,127 @@ function copyDellMetricsData() {
   Time to download file: ${downloadTime}
   Internal Speed Test (https://baldr.ucc.nau.edu/stc/speed/): ${internalSpeedTest}
   Does the Dell Latitude stay connected to the AP? : ${stayConnectedValue}
-  If not, how long does it stay connected? : ${disconnectTime}
+  ${stayConnectedValue === 'No' ? 'If not, how long does it stay connected? : ' + disconnectTime : ''}
   
   In addition, Student Tech should ensure that the troubleshooting steps listed for the phones tech have been completed.
   An Ethernet cable is also brought to the user so they can stay connected while we continue the troubleshooting process. If the user just wants to use Ethernet instead and stop troubleshooting, ticket closed.
   If troubleshooting by Student tech fixes connectivity problems, ticket closed. This should be added as a "Work Note" in the open ServiceNow ticket.
   `;
 
+  // Copy the metrics data only (excluding the function definition)
   navigator.clipboard.writeText(data)
-    .then(() => alert('Dell Metrics Data copied to clipboard'))
-    .catch(err => console.error('Unable to copy Dell Metrics Data to clipboard', err));
+    .then(() => alert('Dell Latitude Metrics Info has been copied to the clipboard'))
+    .catch(err => console.error('Unable to copy Dell Latitude Metrics Info to clipboard', err));
 }
 
-function copyAllInfo() {
-  // Copy Part 1 data
-  var part1Data = copyToTable();
+function copyAllMetricsData() {
+  // Validate part 1 data
+  var deviceInput = document.querySelectorAll('.deviceInput');
+  var macInput = document.querySelectorAll('.macInput');
+  var primaryBandInput = document.querySelectorAll('.primaryBandInput');
+  var missingPart1Fields = [];
 
-  // Copy Part 2 data
-  var part2Data = copyPart2Data();
+  for (var i = 0; i < deviceInput.length; i++) {
+    if (!deviceInput[i].value || !macInput[i].value || !primaryBandInput[i].value) {
+      missingPart1Fields.push('Device ' + (i + 1));
+    }
+  }
 
-  // Copy Part 3 data
-  var part3Data = copyDellMetricsData();
+  // Validate table data
+  var table = document.getElementById('dataTable');
+  var rows = table.querySelectorAll('tr');
+  var missingTableData = rows.length <= 1 ? ['Devices Table'] : [];
 
-  // Combine all parts into one string
-  var allData = part1Data + '\n\n' + part2Data + '\n\n' + part3Data;
+  // Validate part 2 data
+  const part2Form = document.getElementById('part2Form');
+  const aircheckSections = part2Form.querySelectorAll('.aircheck');
+  var missingPart2Fields = [];
 
-  // Copy the combined data to the clipboard
-  navigator.clipboard.writeText(allData)
-    .then(() => alert('All information copied to clipboard'))
-    .catch(err => console.error('Unable to copy all information to clipboard', err));
+  aircheckSections.forEach(section => {
+    const inputs = section.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (!input.value) {
+        const label = input.parentElement.querySelector('b').textContent.trim();
+        missingPart2Fields.push(label);
+      }
+    });
+  });
+
+  // Validate part 3 data
+  const webConnectionSpeed = document.getElementById('webConnectionSpeed').value.trim();
+  const downloadTime = document.getElementById('downloadTime').value.trim();
+  const internalSpeedTest = document.getElementById('internalSpeedTest').value.trim();
+  const stayConnected = document.querySelector('input[name="stayConnected"]:checked');
+  const disconnectTime = document.getElementById('disconnectTime').value.trim();
+  var missingPart3Fields = [];
+
+  if (!webConnectionSpeed || !downloadTime || !internalSpeedTest || !stayConnected) {
+    missingPart3Fields.push('Dell Latitude Metrics fields');
+  }
+
+  var missingItems = missingPart1Fields.concat(missingTableData, missingPart2Fields, missingPart3Fields);
+
+  if (missingItems.length > 0) {
+    alert('Please fill in the following fields:\n\n' + missingItems.join('\n'));
+    return;
+  }
+
+  // If all data is filled, proceed with copying all parts
+  var part1Data = '';
+  part1Data += '-----------------------------------\n';
+  part1Data += 'DEVICES INFORMATION:\n';
+  part1Data += '-----------------------------------\n';
+
+  rows.forEach((row, rowIndex) => {
+    if (rowIndex > 0) {
+      var cells = row.querySelectorAll('td');
+      part1Data += 'Device ' + (rowIndex) + ':\n';
+      cells.forEach((cell, cellIndex) => {
+        var label = table.querySelector('th:nth-child(' + (cellIndex + 1) + ')').textContent.trim();
+        part1Data += label + (rowIndex) + ': ' + cell.innerHTML.trim() + '\n';
+      });
+      part1Data += '\n';
+    }
+  });
+
+  var part2Data = '';
+  part2Data += '-----------------------------------\n';
+  part2Data += 'AIR-CHECK METRICS:\n';
+  part2Data += '-----------------------------------\n';
+
+  aircheckSections.forEach(section => {
+    const heading = section.querySelector('h3').textContent.trim();
+    part2Data += `${heading}\n`;
+
+    const inputs = section.querySelectorAll('input');
+    inputs.forEach(input => {
+      const label = input.parentElement.querySelector('b').textContent.trim();
+      part2Data += `${label}: ${input.value}\n`;
+    });
+    part2Data += '\n';
+  });
+
+  var part3Data = '';
+  part3Data += '-----------------------------------\n';
+  part3Data += 'DELL LATITUDE METRICS:\n';
+  part3Data += '-----------------------------------\n';
+  part3Data += 'Check web connection speed (https://drive.google.com/drive/folders/14y3VaiITf_gjgzD16fJSlJOUobo88rWl 10MB file): ' + webConnectionSpeed + '\n';
+  part3Data += 'Time to download file: ' + downloadTime + '\n';
+  part3Data += 'Internal Speed Test (https://baldr.ucc.nau.edu/stc/speed/): ' + internalSpeedTest + '\n';
+  part3Data += 'Does the Dell Latitude stay connected to the AP? : ' + (stayConnected ? stayConnected.value : 'N/A') + '\n';
+  if (stayConnected && stayConnected.value === 'No') {
+    part3Data += 'If not, how long does it stay connected? : ' + disconnectTime + '\n';
+  }
+
+  // Additional information
+  part3Data += '\nIn addition, Student Tech should ensure that the troubleshooting steps listed for the phones tech have been completed.\n';
+  part3Data += 'An Ethernet cable is also brought to the user so they can stay connected while we continue the troubleshooting process. If the user just wants to use Ethernet instead and stop troubleshooting, ticket closed.\n';
+  part3Data += 'If troubleshooting by Student tech fixes connectivity problems, ticket closed. This should be added as a "Work Note" in the open ServiceNow ticket.\n';
+
+  var combinedData = part1Data + '\n' + part2Data + '\n' + part3Data;
+
+  navigator.clipboard.writeText(combinedData)
+    .then(() => alert('All Metrics Info has been copied to the clipboard'))
+    .catch(err => console.error('Unable to copy All Metrics Info to clipboard', err));
 }
+
