@@ -1,126 +1,181 @@
 /* Add your styles here */
+
+/* Add your styles here */
 body {
-  background-image: url('image.jpg'); /* Replace 'background-image.jpg' with the path to your image */
+  font-family: 'Proxima Nova', Arial, sans-serif; /* Match nau.edu font */
+  margin: 0; /* Remove default margin */
+}
+
+.top-image {
+  width: 100%;
+  height: 250px;
+  display: block;
+  opacity: 1;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 5;
+  background-image: url('background.jpg'); /* Background image for the entire page */
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  font-family: Arial, sans-serif; /* Adding a fallback font */
+  z-index: -1; /* Send it to the back */
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px; /* Adding padding to the container */
+  max-width: 800px; /* Adjust container width */
+  margin: 0  ;/* Center container and adjust bottom margin */
+  padding: 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  border-radius: 10px; /* Rounded corners */
+  background-color: rgba(255, 255, 255, 0.9); /* Background color for form container */
+}
+
+.container img {
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+  opacity: 0.8; /* Adjust the opacity of the image */
+}
+
+
+/* Add other styles for your form elements here */
+
+
+body {
+  font-family: 'Proxima Nova', Arial, sans-serif; /* Match nau.edu font */
+  background-color: #fff; /* White background */
+  color: #003366; /* Match nau.edu text color */
+  margin: 0; /* Remove default margin */
+}
+
+.container {
+  max-width: 800px; /* Adjust container width */
+  margin: auto; /* Center container */
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.adding-devices,
+.aircheck-metrics,
+.dell-latitude-metrics {
+  margin-bottom: 40px;
+  padding: 20px; /* Adding padding to the section */
+  border-radius: 10px; /* Adding border-radius for rounded corners */
 }
 
 .adding-devices {
-  margin-bottom: 40px;
-  text-align: center;
-  padding: 20px; /* Adding padding to the section */
-  border-radius: 10px; /* Adding border-radius for rounded corners */
-  background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent white background to the section */
+  background-color: #e8f3fa; /* Light gray background for first section */
 }
 
 .aircheck-metrics {
-  margin-bottom: 40px;
-  text-align: center;
-  padding: 20px; /* Adding padding to the section */
-  border-radius: 10px; /* Adding border-radius for rounded corners */
-  background-color: rgba(200, 200, 200, 0.8); /* Adding a semi-transparent gray background to the section */
+  background-color: #fcf9eb; /* Off-white background for second section */
 }
 
-.device, .aircheck {
-  margin-bottom: 20px;
+.dell-latitude-metrics {
+  background-color: #e8f3fa; /* Light gray background for third section */
+}
+
+h2, h3 {
+  color: #003366; /* Match nau.edu heading color */
 }
 
 label {
   display: block;
   margin-bottom: 10px;
-  font-weight: bold;
+  color: #666; /* Light gray text for labels */
 }
 
 input[type="text"] {
   width: calc(100% - 10px);
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-h3 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* Background color modifications */
-.aircheck:nth-child(even) {
-  background-color: #f2f2f2; /* Background color for even sections */
-}
-
-.aircheck:nth-child(odd) {
-  background-color: #a9ddb6; /* Background color for odd sections */
-}
-
-/* Part 3 - Dell Latitude Metrics */
-/* Part 3 - Dell Latitude Metrics */
-.dell-latitude-metrics {
-  margin-bottom: 40px;
-  text-align: center;
-  padding: 20px; /* Adding padding to the section */
-  border-radius: 10px; /* Adding border-radius for rounded corners */
-  background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent white background to the section */
-}
-
-.dell-latitude-metrics label {
   display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.dell-latitude-metrics input[type="text"] {
-  width: calc(100% - 10px);
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-.dell-latitude-metrics button {
+  margin: 0 auto;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #fdb913; /* NAU Gold (Yellow) */
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  color: #003366; /* Match nau.edu text color */
   cursor: pointer;
-  margin-top: 10px;
+  font-size: 16px;
+  margin-bottom: 10px; /* Add some bottom margin to separate buttons */
+  
+}
+button:hover {
+  background-color: #337ab7; /* Darker shade of NAU Gold on hover */
 }
 
-.dell-latitude-metrics button:hover {
-  background-color: #0056b3;
+button.copy-metrics {
+  background-color: #337ab7; /* Change to your desired color */
+}
+
+#Div {
+  margin-top: 10px; /* Add margin to separate the disconnect time question */
+}
+
+
+
+
+button:disabled {
+  background-color: #ccc; /* Gray background when button is disabled */
+  cursor: not-allowed;
 }
 
 .stay-connected-options input[type="radio"] {
-  display: inline-block;
+  display: none; /* Hide radio buttons */
 }
 
 .stay-connected-options label {
   display: inline-block;
+  padding: 8px 20px;
   margin-right: 10px;
+  background-color: #003366; /* Match nau.edu background color */
+  color: #fff; /* White text */
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+.stay-connected-options label:hover {
+  background-color: #002e5b; /* Darker shade of blue on hover */
+}
+
+.stay-connected-options input[type="radio"]:checked + label {
+  background-color: #0099d8; /* Light blue background for selected option */
+}
+
+.aircheck-metrics .aircheck-subsection:nth-child(even) {
+  background-color: #f5f5f5; /* Alternate background color for even numbered sub-sections */
+}
+
+.aircheck-metrics .aircheck-subsection:nth-child(odd) {
+  background-color: #e5e5e5; /* Alternate background color for odd numbered sub-sections */
+}
+
+.blue-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #337ab7; /* Blue color */
+  border: none;
+  border-radius: 5px;
+  color: #fff; /* White text */
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px; /* Add some bottom margin to separate buttons */
+}
+
+.blue-button:hover {
+  background-color: #fdb913 /* Darker shade of blue on hover */
+}
+
