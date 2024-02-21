@@ -162,20 +162,60 @@ button:disabled {
   background-color: #e5e5e5; /* Alternate background color for odd numbered sub-sections */
 }
 
+/* CSS for the button container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: px; /* Add some bottom margin */
+}
+
+/* CSS for the button */
 .blue-button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  background-color: #337ab7; /* Blue color */
+  background-color: #337ab7;
   border: none;
   border-radius: 5px;
-  color: #fff; /* White text */
+  color: #fff;
+  padding: 20px 30px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 10px; /* Add some bottom margin to separate buttons */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
 .blue-button:hover {
-  background-color: #fdb913 /* Darker shade of blue on hover */
+  background-color: #0056b3; /* Darker shade of blue on hover */
 }
 
+
+
+.footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #003366; /* Match nau.edu background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Center-align the text */
+  padding: 20px; /* Padding to provide space around the content */
+  z-index: 999; /* Ensure footer appears above other content */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 16px;
+}
+
+.footer-text span {
+  font-weight: bold;
+}
+
+.footer-text::before,
+.footer-text::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #fff;
+  margin: 0 20px;
+}
