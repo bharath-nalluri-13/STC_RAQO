@@ -72,9 +72,15 @@ function copyToTable() {
     }
   });
 
+  // Copy the data to clipboard
+  navigator.clipboard.writeText(data)
+    .then(() => {
+      alert('Devices table information has been copied');
+    })
+    .catch(err => console.error('Unable to copy devices table information to clipboard', err));
+
   return data; // Return the formatted data
 }
-
 
 function copyPart2Data() {
   const part2Form = document.getElementById('part2Form');
@@ -120,8 +126,16 @@ function copyPart2Data() {
     data += '\n';
   });
 
+  // Copy the data to clipboard
+  navigator.clipboard.writeText(data)
+    .then(() => {
+      alert('Aircheck data has been copied');
+    })
+    .catch(err => console.error('Unable to copy aircheck data to clipboard', err));
+
   return data; // Return the formatted data
 }
+
 
 function copyBothData() {
   // Validate part 1 data
